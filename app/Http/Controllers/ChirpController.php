@@ -8,6 +8,8 @@ use Illuminate\Http\Response;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 
+use Illuminate\Support\Facades\DB;
+
 class ChirpController extends Controller
 {
     /**
@@ -38,6 +40,8 @@ class ChirpController extends Controller
         ]);
  
         $request->user()->chirps()->create($validated);
+
+	DB::unprepared('call dolt_commit(\'-Am\', \'Inserted new chirp\')'); 
  
         return redirect(route('chirps.index'));
     }
@@ -74,6 +78,8 @@ class ChirpController extends Controller
         ]);
  
         $chirp->update($validated);
+
+	DB::unprepared('call dolt_commit(\'-Am\', \'Updated chirp\')');
  
         return redirect(route('chirps.index'));
     }
@@ -86,6 +92,8 @@ class ChirpController extends Controller
         $this->authorize('delete', $chirp);
  
         $chirp->delete();
+
+	DB::unprepared('call dolt_commit(\'-Am\', \'Deleted chirp\')');
  
         return redirect(route('chirps.index'));
     }
