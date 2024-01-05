@@ -29,7 +29,7 @@ Route::resource('chirps', ChirpController::class)
     ->middleware(['auth', 'verified']);
 
 Route::resource('branches', BranchController::class)
-    ->only(['index', 'store'])
+    ->only(['index', 'update'])
     ->middleware(['auth', 'verified']);
 
 Route::middleware('auth')->group(function () {
