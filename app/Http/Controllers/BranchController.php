@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Branch;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response; 
+use Illuminate\Http\Response;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
 use Illuminate\Support\Facades\DB;
@@ -33,9 +34,13 @@ class BranchController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        //
+	$branch_name = $request->input('branch_name');
+
+	DB::unprepared("call dolt_branch('$branch_name')");
+	
+        return redirect(route('branches.index'));
     }
 
     /**
