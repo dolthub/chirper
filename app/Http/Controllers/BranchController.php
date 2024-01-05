@@ -17,9 +17,15 @@ class BranchController extends Controller
      */
     public function index(): View
     {
+	//config(['database.connections.mysql.database' => 'laravel/test']);
+	//DB::purge('mysql');
+
+	DB::unprepared("use laravel/test");
+
 	return view('branches.index', [
             'branches' => Branch::all(),
-	    'active_branch' => DB::Select('select active_branch() as active')
+	    'active_branch' => DB::Select('select active_branch() as active'),
+	    'session_branch' => session('branch')
         ]);
     }
 
@@ -62,9 +68,11 @@ class BranchController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Branch $branch)
+    public function update(Request $request, Branch $branch): RedirectResponse
     {
-        //
+	$request->session()->put('branch', $branch->name);
+
+        return redirect(route('branches.index'));
     }
 
     /**

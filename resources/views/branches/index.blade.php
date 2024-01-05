@@ -3,7 +3,7 @@
         <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
             @foreach ($branches as $branch)
                 <div class="p-6 flex space-x-2">
-		    @if ( $branch->name == $active_branch[0]->active )
+		    @if ( $branch->name == $session_branch )
 		    <div class="flex-1">
 		        <div>
 		            <span class="text-gray-800"><b>* {{ $branch->name }}</b></span>
@@ -33,8 +33,15 @@
                                             <x-dropdown-link :href="route('branches.destroy', $branch)" onclick="event.preventDefault(); this.closest('form').submit();">
                                                 {{ __('Delete') }}
                                             </x-dropdown-link>
-                                        </form>
-                                 </x-slot>
+                                     </form>
+				     <form method="POST" action="{{ route('branches.update', $branch) }}">
+                                            @csrf
+                                            @method('patch')
+                                            <x-dropdown-link :href="route('branches.update', $branch)" onclick="event.preventDefault(); this.closest('form').submit();">
+                                                {{ __('Use') }}
+                                            </x-dropdown-link>
+			             </form>
+                                 </x-slot>                                
                             </x-dropdown>
 			    </div>
 			</div>
