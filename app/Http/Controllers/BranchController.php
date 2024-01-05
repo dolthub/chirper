@@ -72,6 +72,10 @@ class BranchController extends Controller
      */
     public function destroy(Branch $branch)
     {
-        //
+        $branch_name = $branch->name;
+
+        DB::unprepared("call dolt_branch('-D', '$branch_name')");
+
+        return redirect(route('branches.index'));
     }
 }
