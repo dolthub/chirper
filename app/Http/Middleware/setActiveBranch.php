@@ -19,7 +19,12 @@ class setActiveBranch
     {
 	$active_branch = session('branch');
 
-	config(['database.connections.mysql.database' => 'laravel/' . $active_branch]);
+	$database = 'laravel';
+	if ( $active_branch ) {
+	   $database .= "/$active_branch";
+	}
+
+	config(['database.connections.mysql.database' => $database]);
 	DB::purge('mysql');
 
         return $next($request);
