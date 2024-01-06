@@ -3,7 +3,7 @@
         <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
             @foreach ($branches as $branch)
                 <div class="p-6 flex space-x-2">
-		    @if ( $branch->name == $session_branch )
+		    @if ( $branch->name == $active_branch[0]->active )
 		    <div class="flex-1">
 		        <div>
 		            <span class="text-gray-800"><b>* {{ $branch->name }}</b></span>

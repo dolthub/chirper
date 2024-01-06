@@ -17,11 +17,6 @@ class BranchController extends Controller
      */
     public function index(): View
     {
-	//config(['database.connections.mysql.database' => 'laravel/test']);
-	//DB::purge('mysql');
-
-	DB::unprepared("use laravel/test");
-
 	return view('branches.index', [
             'branches' => Branch::all(),
 	    'active_branch' => DB::Select('select active_branch() as active'),

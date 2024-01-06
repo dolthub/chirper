@@ -5,6 +5,8 @@ use App\Http\Controllers\BranchController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Middleware\setActiveBranch;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,11 +28,11 @@ Route::get('/dashboard', function () {
 
 Route::resource('chirps', ChirpController::class)
     ->only(['index', 'store', 'edit', 'update', 'destroy'])
-    ->middleware(['auth', 'verified']);
+    ->middleware(['auth', 'verified', setActiveBranch::class]);
 
 Route::resource('branches', BranchController::class)
     ->only(['index', 'store', 'destroy', 'update'])
-    ->middleware(['auth', 'verified']);
+    ->middleware(['auth', 'verified', setActiveBranch::class]);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
