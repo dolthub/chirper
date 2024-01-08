@@ -81,4 +81,14 @@ class BranchController extends Controller
 
         return redirect(route('branches.index'));
     }
+
+    public function merge(Request $request): RedirectResponse
+    {
+	$basebranch = $request->basebranch;
+	$mergebranch = $request->mergebranch;
+
+	DB::unprepared("call dolt_merge('$mergebranch')");
+
+	return redirect(route('branches.index'));
+    }
 }

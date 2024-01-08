@@ -26,14 +26,7 @@
                                         </svg>
                                     </button>
                                  </x-slot>
-                                 <x-slot name="content">
-				     <form method="POST" action="{{ route('branches.destroy', $branch) }}">
-                                            @csrf
-                                            @method('delete')
-                                            <x-dropdown-link :href="route('branches.destroy', $branch)" onclick="event.preventDefault(); this.closest('form').submit();">
-                                                {{ __('Delete') }}
-                                            </x-dropdown-link>
-                                     </form>
+		                 <x-slot name="content">
 				     <form method="POST" action="{{ route('branches.update', $branch) }}">
                                             @csrf
                                             @method('patch')
@@ -41,6 +34,17 @@
                                                 {{ __('Use') }}
                                             </x-dropdown-link>
 			             </form>
+
+				     <x-dropdown-link :href="route('branches.merge', [$active_branch[0]->active, $branch->name])">
+                                            {{ __('Merge') }}
+                                     </x-dropdown-link>
+				     <form method="POST" action="{{ route('branches.destroy', $branch) }}">
+                                            @csrf
+                                            @method('delete')
+                                            <x-dropdown-link :href="route('branches.destroy', $branch)" onclick="event.preventDefault(); this.closest('form').submit();">
+                                                {{ __('Delete') }}
+                                            </x-dropdown-link>
+                                     </form>
                                  </x-slot>                                
                             </x-dropdown>
 			    </div>

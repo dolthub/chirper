@@ -34,6 +34,9 @@ Route::resource('branches', BranchController::class)
     ->only(['index', 'store', 'destroy', 'update'])
     ->middleware(['auth', 'verified', setActiveBranch::class]);
 
+Route::get('branches/{basebranch}/merge/{mergebranch}', [BranchController::class, 'merge'])
+   ->name('branches.merge');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
